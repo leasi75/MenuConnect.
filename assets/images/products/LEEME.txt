@@ -1,0 +1,31 @@
+MenuConnect - paquete de fotografías
+
+Ubicación recomendada en GitHub:
+assets/images/products/
+
+Archivos de producto:
+americano.jpg
+cappuccino.jpg
+latte-vainilla.jpg
+moka.jpg
+cold-brew.jpg
+frappe-caramelo.jpg
+chocolate-frio.jpg
+te-chai.jpg
+te-frutos-rojos.jpg
+croissant.jpg
+panque-limon.jpg
+galleta-chocolate.jpg
+bagel-jamon.jpg
+sandwich-club.jpg
+ensalada-fresca.jpg
+cheesecake.jpg
+brownie.jpg
+tiramisu.jpg
+
+Portada:
+hero-cafeteria.jpg
+
+Todas las fotografías están libres de texto y logotipos.
+Productos: 1200 x 900 px.
+Portada: 1600 x 600 px.
