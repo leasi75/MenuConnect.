@@ -1,0 +1,16 @@
+MenuConnect - imágenes sin texto
+
+Sube estos archivos a GitHub, sugerentemente dentro de:
+assets/images/
+
+Incluye:
+cafe.jpg
+bebidas-frias.jpg
+tes.jpg
+panaderia.jpg
+alimentos.jpg
+postres.jpg
+
+Cada imagen individual mide 1200 x 900 px.
+También se incluye menuconnect-categorias-completa.jpg como referencia.
+No contienen textos ni logotipos.
