@@ -1,0 +1,7 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MenuConnect | Coffee CLUB</title><link rel="stylesheet" href="assets/styles.css"></head><body>
+<header><b>MenuConnect <small>by Marketing Connect</small></b><nav><button onclick="setPlan('basic')">Básico</button><button onclick="setPlan('premium')">Premium</button><button onclick="openCart()">Pedido <span id="count">0</span></button></nav></header>
+<section class="hero"><p>DEMO CAFETERÍA</p><h1>Coffee CLUB</h1><p>Explora el menú, personaliza y arma tu pedido.</p></section>
+<main><div class="tools"><div id="filters"></div><input id="search" placeholder="Buscar..."></div><div id="grid"></div></main>
+<div id="modal" class="modal hidden"><div class="box"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
+<aside id="cart"><button class="close" onclick="closeCart()">×</button><h2>Tu pedido</h2><div id="items"></div><label>Nombre del comensal<input id="name"></label><label>Número de mesa<input id="table"></label><label>Indicaciones para el restaurante<textarea id="notes"></textarea></label><h3>Total: <span id="total">$0</span></h3><button class="wa" onclick="send()">Enviar pedido por WhatsApp</button></aside>
+<footer>MenuConnect · Menú digital para restaurantes, cafeterías y negocios de alimentos</footer><script src="assets/app.js"></script></body></html>
