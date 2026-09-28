@@ -113,7 +113,7 @@ nav button:hover,
       rgba(37,23,14,.92),
       rgba(37,23,14,.35)
     ),
-    url('hero.svg') center / cover no-repeat;
+    url('images/products/hero-cafeteria.jpg') center / cover no-repeat;
 }
 
 .hero h1 {
