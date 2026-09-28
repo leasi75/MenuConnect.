@@ -43,20 +43,36 @@ const money = n => '$' + n;
    IMÁGENES POR CATEGORÍA
 ======================================== */
 
-function categoryImage(category) {
+function productImage(id) {
 
   const images = {
-    'Café': 'assets/images/cafe.jpg',
-    'Bebidas frías': 'assets/images/bebidas-frias.jpg',
-    'Tés': 'assets/images/tes.jpg',
-    'Panadería': 'assets/images/panaderia.jpg',
-    'Alimentos': 'assets/images/alimentos.jpg',
-    'Postres': 'assets/images/postres.jpg'
+    0: 'assets/images/products/americano.jpg',
+    1: 'assets/images/products/cappuccino.jpg',
+    2: 'assets/images/products/latte-vainilla.jpg',
+    3: 'assets/images/products/moka.jpg',
+
+    4: 'assets/images/products/cold-brew.jpg',
+    5: 'assets/images/products/frappe-caramelo.jpg',
+    6: 'assets/images/products/chocolate-frio.jpg',
+
+    7: 'assets/images/products/te-chai.jpg',
+    8: 'assets/images/products/te-frutos-rojos.jpg',
+
+    9: 'assets/images/products/croissant.jpg',
+    10: 'assets/images/products/panque-limon.jpg',
+    11: 'assets/images/products/galleta-chocolate.jpg',
+
+    12: 'assets/images/products/bagel-jamon.jpg',
+    13: 'assets/images/products/sandwich-club.jpg',
+    14: 'assets/images/products/ensalada-fresca.jpg',
+
+    15: 'assets/images/products/cheesecake.jpg',
+    16: 'assets/images/products/brownie.jpg',
+    17: 'assets/images/products/tiramisu.jpg'
   };
 
-  return images[category] || 'assets/images/cafe.jpg';
+  return images[id] || 'assets/images/products/americano.jpg';
 }
-
 
 /* ========================================
    PRODUCTOS DISPONIBLES SEGÚN PLAN
@@ -101,7 +117,7 @@ function render() {
 
         <div class="pic">
           <img
-            src="${categoryImage(x.cat)}"
+            src="${productImage(x.id)}"
             alt="${x.name}"
             loading="lazy"
           >
@@ -191,7 +207,7 @@ function openProduct(id) {
 
     <div class="modal-product-image">
       <img
-        src="${categoryImage(p.cat)}"
+        src="${productImage(p.id)}"
         alt="${p.name}"
       >
     </div>
