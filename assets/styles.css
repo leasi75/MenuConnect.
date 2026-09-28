@@ -708,3 +708,18 @@ footer {
   }
 
 }
+.box textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 11px;
+  margin: 6px 0 14px;
+  border: 1px solid #d7d1c9;
+  border-radius: 8px;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+}
+
+.box textarea:focus {
+  border-color: var(--orange);
+}
