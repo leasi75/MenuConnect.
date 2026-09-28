@@ -35,12 +35,11 @@ let q = '';
 let cart = [];
 
 const $ = s => document.querySelector(s);
-
 const money = n => '$' + n;
 
 
 /* ========================================
-   IMÁGENES POR CATEGORÍA
+   IMÁGENES DE PRODUCTOS
 ======================================== */
 
 function productImage(id) {
@@ -74,8 +73,9 @@ function productImage(id) {
   return images[id] || 'assets/images/products/americano.jpg';
 }
 
+
 /* ========================================
-   PRODUCTOS DISPONIBLES SEGÚN PLAN
+   PRODUCTOS SEGÚN PLAN
 ======================================== */
 
 function list() {
@@ -84,12 +84,12 @@ function list() {
 
 
 /* ========================================
-   MOSTRAR CATÁLOGO
+   CATÁLOGO
 ======================================== */
 
 function render() {
 
-  let cats = [
+  const cats = [
     'Todos',
     ...new Set(list().map(x => x.cat))
   ];
@@ -103,7 +103,6 @@ function render() {
     </button>
   `).join('');
 
-
   $('#grid').innerHTML = list()
 
     .filter(x =>
@@ -112,7 +111,6 @@ function render() {
     )
 
     .map(x => `
-
       <article class="card">
 
         <div class="pic">
@@ -145,7 +143,6 @@ function render() {
         </div>
 
       </article>
-
     `).join('');
 }
 
@@ -157,14 +154,171 @@ function render() {
 function setPlan(p) {
 
   plan = p;
-
   filter = 'Todos';
-
   cart = [];
 
   update();
-
   render();
+}
+
+
+/* ========================================
+   CONTROLES DE PERSONALIZACIÓN
+======================================== */
+
+function sizeOptions() {
+  return `
+    <label>
+      Tamaño
+      <select id="size">
+        <option>Chico</option>
+        <option selected>Mediano</option>
+        <option>Grande (+$10)</option>
+      </select>
+    </label>
+  `;
+}
+
+
+function milkOptions() {
+  return `
+    <label>
+      Leche
+      <select id="milk">
+        <option>Entera</option>
+        <option>Deslactosada</option>
+        <option>Almendra</option>
+        <option>Avena</option>
+      </select>
+    </label>
+  `;
+}
+
+
+function shotOption() {
+  return `
+    <p>
+      <label>
+        <input id="shot" type="checkbox">
+        Shot extra (+$15)
+      </label>
+    </p>
+  `;
+}
+
+
+function quantityOption() {
+  return `
+    <label>
+      Cantidad
+      <select id="qty">
+        <option selected>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </label>
+  `;
+}
+
+
+function specialInstructions() {
+  return `
+    <label>
+      Indicaciones especiales
+      <textarea
+        id="special"
+        rows="3"
+        placeholder="Ej. sin jitomate, aderezo aparte..."
+      ></textarea>
+    </label>
+  `;
+}
+
+
+/* ========================================
+   OPCIONES SEGÚN PRODUCTO
+======================================== */
+
+function productOptions(p) {
+
+  /* CAFÉ */
+  if (p.cat === 'Café') {
+    return `
+      ${sizeOptions()}
+      ${milkOptions()}
+      ${shotOption()}
+    `;
+  }
+
+
+  /* COLD BREW */
+  if (p.name === 'Cold Brew') {
+    return `
+      ${sizeOptions()}
+      ${milkOptions()}
+      ${shotOption()}
+    `;
+  }
+
+
+  /* FRAPPÉ */
+  if (p.name === 'Frappé Caramelo') {
+    return `
+      ${sizeOptions()}
+      ${milkOptions()}
+      ${shotOption()}
+    `;
+  }
+
+
+  /* CHOCOLATE FRÍO */
+  if (p.name === 'Chocolate frío') {
+    return `
+      ${sizeOptions()}
+      ${milkOptions()}
+    `;
+  }
+
+
+  /* TÉ CHAI */
+  if (p.name === 'Té chai') {
+    return `
+      ${sizeOptions()}
+      ${milkOptions()}
+    `;
+  }
+
+
+  /* TÉ FRUTOS ROJOS */
+  if (p.name === 'Té frutos rojos') {
+    return sizeOptions();
+  }
+
+
+  /* PANADERÍA */
+  if (p.cat === 'Panadería') {
+    return quantityOption();
+  }
+
+
+  /* ALIMENTOS */
+  if (p.cat === 'Alimentos') {
+    return `
+      ${quantityOption()}
+      ${specialInstructions()}
+    `;
+  }
+
+
+  /* POSTRES */
+  if (p.cat === 'Postres') {
+    return quantityOption();
+  }
+
+
+  return quantityOption();
 }
 
 
@@ -174,23 +328,17 @@ function setPlan(p) {
 
 function openProduct(id) {
 
-  let p = P[id];
+  const p = P[id];
 
-  /*
-   PLAN BÁSICO
-   Pedido directo por WhatsApp
-  */
+  /* PLAN BÁSICO */
 
   if (plan === 'basic') {
 
     window.open(
-
       'https://wa.me/?text=' +
-
       encodeURIComponent(
         `Hola, me interesa pedir ${p.name} (${money(p.price)}). ¿Me confirman disponibilidad?`
       ),
-
       '_blank'
     );
 
@@ -198,10 +346,7 @@ function openProduct(id) {
   }
 
 
-  /*
-   PLAN PREMIUM
-   Personalización del producto
-  */
+  /* PLAN PREMIUM */
 
   $('#modalBody').innerHTML = `
 
@@ -218,61 +363,7 @@ function openProduct(id) {
 
     <h3>${money(p.price)}</h3>
 
-    <label>
-
-      Tamaño
-
-      <select id="size">
-
-        <option>Chico</option>
-
-        <option selected>
-          Mediano
-        </option>
-
-        <option>
-          Grande (+$10)
-        </option>
-
-      </select>
-
-    </label>
-
-
-    <label>
-
-      Leche
-
-      <select id="milk">
-
-        <option>Entera</option>
-
-        <option>Deslactosada</option>
-
-        <option>Almendra</option>
-
-        <option>Avena</option>
-
-      </select>
-
-    </label>
-
-
-    <p>
-
-      <label>
-
-        <input
-          id="shot"
-          type="checkbox"
-        >
-
-        Shot extra (+$15)
-
-      </label>
-
-    </p>
-
+    ${productOptions(p)}
 
     <button
       class="add"
@@ -281,7 +372,6 @@ function openProduct(id) {
       Agregar al pedido
     </button>
   `;
-
 
   $('#modal').classList.remove('hidden');
 }
@@ -292,7 +382,6 @@ function openProduct(id) {
 ======================================== */
 
 function closeModal() {
-
   $('#modal').classList.add('hidden');
 }
 
@@ -303,38 +392,93 @@ function closeModal() {
 
 function add(id) {
 
-  let p = P[id];
+  const p = P[id];
 
-  let size = $('#size').value;
+  const sizeElement = $('#size');
+  const milkElement = $('#milk');
+  const shotElement = $('#shot');
+  const qtyElement = $('#qty');
+  const specialElement = $('#special');
 
-  let milk = $('#milk').value;
+  const size = sizeElement
+    ? sizeElement.value
+    : '';
 
-  let shot = $('#shot').checked;
+  const milk = milkElement
+    ? milkElement.value
+    : '';
+
+  const shot = shotElement
+    ? shotElement.checked
+    : false;
+
+  const qty = qtyElement
+    ? Number(qtyElement.value)
+    : 1;
+
+  const special = specialElement
+    ? specialElement.value.trim()
+    : '';
 
 
-  let price =
-    p.price +
-    (size.startsWith('Grande') ? 10 : 0) +
-    (shot ? 15 : 0);
+  let unitPrice = p.price;
+
+  if (size.startsWith('Grande')) {
+    unitPrice += 10;
+  }
+
+  if (shot) {
+    unitPrice += 15;
+  }
+
+  const final = unitPrice * qty;
 
 
   cart.push({
-
     ...p,
-
     size,
-
     milk,
-
     shot,
-
-    final: price
+    qty,
+    special,
+    unitPrice,
+    final
   });
 
-
   closeModal();
-
   update();
+}
+
+
+/* ========================================
+   DESCRIPCIÓN DEL PRODUCTO EN CARRITO
+======================================== */
+
+function cartDetails(x) {
+
+  const details = [];
+
+  if (x.size) {
+    details.push(x.size.replace(' (+$10)', ''));
+  }
+
+  if (x.milk) {
+    details.push(`Leche ${x.milk}`);
+  }
+
+  if (x.shot) {
+    details.push('Shot extra');
+  }
+
+  if (x.qty > 1) {
+    details.push(`Cantidad: ${x.qty}`);
+  }
+
+  if (x.special) {
+    details.push(`Indicaciones: ${x.special}`);
+  }
+
+  return details.join(' · ');
 }
 
 
@@ -344,7 +488,8 @@ function add(id) {
 
 function update() {
 
-  $('#count').textContent = cart.length;
+  $('#count').textContent =
+    cart.reduce((total, x) => total + x.qty, 0);
 
 
   $('#items').innerHTML = cart.map((x, i) => `
@@ -353,22 +498,18 @@ function update() {
 
       <span>
 
-        <b>${x.name}</b>
+        <b>
+          ${x.qty > 1 ? `${x.qty} × ` : ''}
+          ${x.name}
+        </b>
 
-        <br>
-
-        <small>
-
-          ${x.size} · ${x.milk}
-
-          ${x.shot
-            ? ' · shot extra'
-            : ''}
-
-        </small>
+        ${
+          cartDetails(x)
+            ? `<br><small>${cartDetails(x)}</small>`
+            : ''
+        }
 
       </span>
-
 
       <span>
 
@@ -376,6 +517,7 @@ function update() {
 
         <button
           onclick="cart.splice(${i},1);update()"
+          aria-label="Eliminar ${x.name}"
         >
           ×
         </button>
@@ -390,9 +532,8 @@ function update() {
 
 
   $('#total').textContent = money(
-
     cart.reduce(
-      (s, x) => s + x.final,
+      (sum, x) => sum + x.final,
       0
     )
   );
@@ -404,38 +545,69 @@ function update() {
 ======================================== */
 
 function openCart() {
-
   $('#cart').classList.add('open');
 }
 
 
 function closeCart() {
-
   $('#cart').classList.remove('open');
 }
 
 
 /* ========================================
-   ENVIAR PEDIDO
+   TEXTO DEL PRODUCTO PARA WHATSAPP
+======================================== */
+
+function whatsappProduct(x, i) {
+
+  const details = [];
+
+  if (x.size) {
+    details.push(x.size.replace(' (+$10)', ''));
+  }
+
+  if (x.milk) {
+    details.push(`leche ${x.milk}`);
+  }
+
+  if (x.shot) {
+    details.push('shot extra');
+  }
+
+  if (x.special) {
+    details.push(x.special);
+  }
+
+  const quantity =
+    x.qty > 1
+      ? `${x.qty} x `
+      : '';
+
+  const customization =
+    details.length
+      ? ` — ${details.join(', ')}`
+      : '';
+
+  return `${i + 1}. ${quantity}${x.name}${customization} — ${money(x.final)}`;
+}
+
+
+/* ========================================
+   ENVIAR PEDIDO POR WHATSAPP
 ======================================== */
 
 function send() {
 
   if (!cart.length) {
-
-    return alert(
-      'Agrega productos.'
-    );
+    return alert('Agrega productos.');
   }
 
 
-  let msg =
+  const msg =
     'Hola, quiero realizar este pedido en Coffee CLUB:\n\n' +
 
-    cart.map((x, i) =>
-
-      `${i + 1}. ${x.name} — ${x.size}, leche ${x.milk}${x.shot ? ', shot extra' : ''} — ${money(x.final)}`
-
+    cart.map(
+      (x, i) => whatsappProduct(x, i)
     ).join('\n') +
 
     `\n\nTotal: ${$('#total').textContent}` +
@@ -444,15 +616,12 @@ function send() {
 
     `\nMesa: ${$('#table').value || 'No indicada'}` +
 
-    `\nIndicaciones: ${$('#notes').value || 'Sin indicaciones'}`;
+    `\nIndicaciones generales: ${$('#notes').value || 'Sin indicaciones'}`;
 
 
   window.open(
-
     'https://wa.me/?text=' +
-
     encodeURIComponent(msg),
-
     '_blank'
   );
 }
@@ -463,9 +632,7 @@ function send() {
 ======================================== */
 
 $('#search').oninput = e => {
-
   q = e.target.value.toLowerCase();
-
   render();
 };
 
@@ -475,5 +642,4 @@ $('#search').oninput = e => {
 ======================================== */
 
 render();
-
 update();
